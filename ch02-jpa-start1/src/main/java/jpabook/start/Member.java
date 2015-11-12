@@ -11,6 +11,7 @@ import java.util.Date;
  * 1. 회원은 일반 회원과 관리자로 구분해야 한다
  * 2. 회원 가입일과 수정일이 있어야 한다
  * 3. 회원을 설명할 수 있는 필드가 있어야 한다( 이 필드는 길이 제한이 없다 )
+ * 4. 회원 이름은 필수로 입력되어야 하고 10자를 초과하면 안 된다
  */
 @Entity
 @Table(name="MEMBER")
@@ -20,7 +21,7 @@ public class Member {
     @Column(name = "ID")
     private String id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false, length = 10)  // 조건 추가
     private String username;
 
     private Integer age;
