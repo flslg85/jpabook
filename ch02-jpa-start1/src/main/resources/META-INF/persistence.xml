@@ -18,7 +18,36 @@
             <property name="hibernate.use_sql_comments" value="true" />
             <property name="hibernate.id.new_generator_mappings" value="true" />
 
-            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <!--
+             * 매핑정보와 데이터베이스 방언을 사용해서 데이터베이스 스키마를 생성하도록 하는 설정
+
+             * hibernate.hbm2ddl.auto 속성
+                * create : 기존 테이블을 삭제하고 새로 생성, DROP + CREATE
+                * create-drop : create 속성에 추가로 애플리케이션을 종료할 때 생성한 DDL을 제거, DROP + CREATE + DROP
+                * update : 데이터베이스 테이블과 엔티티 매핑정보를 비교해서 변경 사항만 수정
+                * validate : 데이터베이스 테이블과 엔티티 매핑정보를 비교해서 차이가 있으면 경고를 남기고 애플리케이션을 실행하지 않는다
+                             이 설정은 DDL을 수정하지 않는다
+                * none : 자동 생성 기능을 사용하지 않으려면 hibernate.hbm2ddl.auto 속성을 삭제하거나 유효하지 않은 옵션 값을 주면 된다
+
+             * HBM2DDL 주의사항
+                * 개발 초기 단계 : create or update
+                * 초기화 상태로 자동화된 테스트를 진행하는 개발 환경과 CI 서버 : create or create-drop
+                * 테스트 서버 : update or validate
+                * 스테이징과 운영 서버 : validate or none
+            -->
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+
+
+            <!--
+              * 이름 매핑 전략 변경하기
+                * 자바 : roleType과 같이 카멜 표기법을 주로 사용
+                * 데이터베이스 : role_type 과 같이 언더스코어를 주로 사용
+
+              * 아래와 같이 사용 가능하지만 hibernate.ejb.naming_strategy 속성을 사용하면 이름 매핑 전략을 변경할 수 있다
+                @Column(name="role_type")
+                String roleType
+            -->
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />
         </properties>
     </persistence-unit>
 
