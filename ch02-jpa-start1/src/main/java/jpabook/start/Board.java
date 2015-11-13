@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 /**
  * sequence
+ * @SequenceGenerator를 사용해서 BOARD_SEQ_GENERATOR 시퀀스 생성기를 등록
  */
 //@SequenceGenerator(
 //        name = "BOARD_SEQ_GENERATOR",
@@ -28,8 +29,8 @@ public class Board {
      * 오라클, PostgreSQL, DB2, H2 에서 사용
      */
 //    @GeneratedValue(
-//            strategy = GenerationType.SEQUENCE,
-//            generator = "BOARD_SEQ_GENERATOR"
+//            strategy = GenerationType.SEQUENCE,   // 키 생성 전략을 설정
+//            generator = "BOARD_SEQ_GENERATOR"     // 등록한 시퀀스 생성기를 선택
 //    )
     private Long id;
 
