@@ -9,13 +9,13 @@ import javax.persistence.*;
 public class Board {
     @Id
     /**
-     * identity
+     * IDENTITY
      * MySQL, PostgreSQL, SQL Server, DB2 에서 사용
      */
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     /**
-     * sequence
+     * SEQUENCE
      * 오라클, PostgreSQL, DB2, H2 에서 사용
      * @SequenceGenerator를 사용해서 BOARD_SEQ_GENERATOR 시퀀스 생성기를 등록
      */
@@ -29,6 +29,28 @@ public class Board {
 //        initialValue = 1,
 //        allocationSize = 1
 //)
+
+    /**
+     * TABLE
+     * @TableGenerator 를 사용해서 키 생성기를 등록하고 MY_SEQUENCES 테이블을 키 생성용 테이블로 매핑
+     */
+//    @TableGenerator(
+//            name = "BOARD_SEQ_GENERATOR",
+//            table = "MY_SEQUENCES",
+//            pkColumnValue = "BOARD_SEQ",
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            strategy = GenerationType.TABLE,
+//            generator = "BOARD_SEQ_GENERATOR"
+//    )
+
+    /**
+     * AUTO
+     * @GeneratedValue.strategy : 기본값이 AUTO 이기 떄문에 @GeneratedValue 만 쓰면 AUTO 로 적용됨
+     */
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     private String data;
