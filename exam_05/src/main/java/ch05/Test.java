@@ -18,6 +18,7 @@ public class Test {
             testSave(em);  //비즈니스 로직
             testGetTeam1(em);
             testGetTeam2(em);
+            testUpdate(em);
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {
@@ -58,7 +59,7 @@ public class Test {
 
     // 객체 지향 쿼리 사용
     public static void testGetTeam2(EntityManager em) {
-        String jpql = "select m from Member m join m.team t where t.name=:teamName";
+        String jpql = "select m from Member m join m.team t where t.name=:teamName";    // : 로 시작하는 것은 파라미터를 바인딩 받는 문법임
         List<Member> memberList = em.createQuery(jpql, Member.class)
                 .setParameter("teamName", "팀1")
                 .getResultList();
@@ -68,4 +69,14 @@ public class Test {
         }
     }
 
+    /**
+     * 수정
+     */
+    public static void testUpdate(EntityManager em) {
+        Team team2= new Team("team2", "팀2");
+        em.persist(team2);
+
+        Member member = em.find(Member.class, "member1");
+        member.setTeam(team2);
+    }
 }
