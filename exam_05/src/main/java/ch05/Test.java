@@ -19,6 +19,8 @@ public class Test {
             testGetTeam1(em);
             testGetTeam2(em);
             testUpdate(em);
+            deleteRelation(em);
+            deleteEntity(em);
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {
@@ -78,5 +80,30 @@ public class Test {
 
         Member member = em.find(Member.class, "member1");
         member.setTeam(team2);
+    }
+
+    /**
+     * 삭제
+     */
+    private static void deleteRelation(EntityManager em) {
+        Member member1 = em.find(Member.class, "member1");
+        member1.setTeam(null);  // 연관관계 제거
+    }
+
+    /**
+     * 연관된 엔티티 삭제
+     *  - 기존에 있던 연관관계를 먼저 제거하고 삭제해야 함
+     *  - 그렇지 않으면 외래 키 제약조건으로 인해, 데이터베이스에서 오류가 발생
+     */
+    private static void deleteEntity(EntityManager em) {
+        Member member1 = em.find(Member.class, "member1");
+        Member member2 = em.find(Member.class, "member2");
+
+        Team team = em.find(Team.class, "team1");
+
+        member1.setTeam(null);
+        member2.setTeam(null);
+
+        em.remove(team);
     }
 }
