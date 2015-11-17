@@ -8,3 +8,4 @@ ch08-model5/clean.sh
 ch09-model6/clean.sh
 ch11-jpa-shop/clean.sh
 ch12-springdata-shop/clean.sh
+exam/clean.sh
