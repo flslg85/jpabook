@@ -24,4 +24,16 @@ public class Member {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
