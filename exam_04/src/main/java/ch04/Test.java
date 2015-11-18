@@ -39,23 +39,19 @@ public class Test {
         member.setStreet("street1");
         member.setZipcode("zipcode1");
 
-
         Order order = new Order();
-        order.setMemberId(member.getId());
+        order.setMember(member);
         order.setOrderDate(new Date(67678687));
         order.setStatus(OrderStatus.CANCEL);
 
         OrderItem orderItem = new OrderItem();
-        orderItem.setCount(1);
-        orderItem.setItemId(new Long(5555));
-        orderItem.setOrderId(2323);
-        orderItem.setOrderPrice(1111);
+        orderItem.setOrder(order);
+        order.addOrderItem(orderItem);
 
         Item item = new Item();
         item.setName("name1");
         item.setPrice(1212);
         item.setStockQuantity(111);
-
 
         em.persist(member);
         em.persist(order);

@@ -1,7 +1,9 @@
 package ch04;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by we on 2015. 11. 17..
@@ -14,8 +16,12 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @Column(name = "MEMBER_ID")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
@@ -23,13 +29,19 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    /* method */
 
-    public Long getMemberId() {
-        return memberId;
+    public void setMember(Member member) {
+        if (member != null) {
+            this.member.getOrders().remove(this);
+        }
+        this.member = member;   // order -> member
+        this.member.getOrders().add(this);  // member -> order
     }
 
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem); // order -> orderItem
+        orderItem.setOrder(this);   // orderItem -> order
     }
 
     public Date getOrderDate() {

@@ -1,6 +1,8 @@
 package ch04;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by we on 2015. 11. 17..
@@ -14,6 +16,17 @@ public class Member {
     private String name;
     private String city;
     private String street;
+    private String zipcode;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<Order>();
+
+
+    /* method */
+
+    public List<Order> getOrders() {
+        return orders;
+    }
 
     public Long getId() {
         return id;
@@ -50,6 +63,4 @@ public class Member {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
-
-    private String zipcode;
 }
