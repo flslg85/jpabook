@@ -65,5 +65,13 @@
   member.setTeam(team)
   team.getMembers().add(memeber);
   ```
+  
+* 편의 메소드
 
+  ```java
+  public void setTeam(Team team) {
+    this.team = team;
+    team.getMembers().add(this);
+  }
+  ```
   

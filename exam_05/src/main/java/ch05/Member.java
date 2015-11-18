@@ -23,6 +23,7 @@ public class Member {
 
     public void setTeam(Team team) {
         this.team = team;
+        team.getMembers().add(this);    // 양방향 관계를 설정하도록 함
     }
 
     public Team getTeam() {

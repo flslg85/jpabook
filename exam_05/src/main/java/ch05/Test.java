@@ -43,12 +43,10 @@ public class Test {
         
         Member member1 = new Member("member1", "회원1");
         member1.setTeam(team1);
-        team1.getMembers().add(member1);    // 객체의 주인이 아니기 때문에 저장시 사용되지 않음
         em.persist(member1);
 
         Member member2 = new Member("member2", "회원2");
         member2.setTeam(team1);
-        team1.getMembers().add(member2);
         em.persist(member2);
     }
 
