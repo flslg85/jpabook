@@ -1,6 +1,8 @@
 package ch05;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by we on 2015. 11. 16..
@@ -12,6 +14,9 @@ public class Team {
     private String id;
 
     private String name;
+
+    @OneToMany(mappedBy = "team")   //  mappedBy 양방향 매핑시 사용 반대쪽 매핑의 필드 이름 값으로 설정
+    private List<Member> members = new ArrayList<Member>();
 
     public Team(String id, String name) {
         this.id = id;
@@ -32,5 +37,13 @@ public class Team {
 
     public String getId() {
         return id;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 }

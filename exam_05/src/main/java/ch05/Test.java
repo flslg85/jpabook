@@ -16,11 +16,12 @@ public class Test {
         try {
             tx.begin(); //트랜잭션 시작
             testSave(em);  //비즈니스 로직
-            testGetTeam1(em);
-            testGetTeam2(em);
-            testUpdate(em);
-            deleteRelation(em);
-            deleteEntity(em);
+//            testGetTeam1(em);
+//            testGetTeam2(em);
+//            testUpdate(em);
+//            deleteRelation(em);
+//            deleteEntity(em);
+            biDirection(em);
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {
@@ -42,10 +43,12 @@ public class Test {
         
         Member member1 = new Member("member1", "회원1");
         member1.setTeam(team1);
+        team1.getMembers().add(member1);    // 객체의 주인이 아니기 때문에 저장시 사용되지 않음
         em.persist(member1);
 
         Member member2 = new Member("member2", "회원2");
         member2.setTeam(team1);
+        team1.getMembers().add(member2);
         em.persist(member2);
     }
 
@@ -105,5 +108,17 @@ public class Test {
         member2.setTeam(null);
 
         em.remove(team);
+    }
+
+    /**
+     * 일대다 방향으로 객체 그래프 탐색
+     */
+    private static void biDirection(EntityManager em) {
+        Team team = em.find(Team.class, "team1");
+        List<Member> members = team.getMembers();
+
+        for (Member member : members) {
+            System.out.println("member.name = " + member.getName());
+        }
     }
 }

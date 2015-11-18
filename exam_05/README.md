@@ -44,3 +44,26 @@
 * 실제 코드로 만들어진 UML
 
   ![alt tag](./img/pic_5_2_uml.png)
+
+---
+
+#### 양방향 연관관계
+
+**양방향 객체 연관 관계**
+  
+  ![alt tag](./img/pic_5_5.png)
+  
+**테이블 연관관계**
+
+  ![alt tag](./img/pic_5_6.png)
+  
+**객체의 양방향 연관관계는 양쪽 모두 관계를 맺어주어야 함**
+
+* 양방향 연관관계 코드
+
+  ```java
+  member.setTeam(team)
+  team.getMembers().add(memeber);
+  ```
+
+  
