@@ -74,4 +74,25 @@
     team.getMembers().add(this);
   }
   ```
-  
+
+**연관관계 편의 메소드 작성 시 주의사항**
+
+* 팀 변경시 기존의 관계를 제거하지 않았다
+* 연관관계를 변경할 때는 기존 팀이 있으면 기존 팀과 회원의 연관관계를 삭제하는 코드를 추가해야 함
+
+* 코드
+
+  ```java
+  member1.setTeam(teamA);
+  member1.setTeam(teamB);
+  Member findMember = teamA.getMember();  // memeber1 이 여전히 조회됨
+  ```
+
+* 삭제되지 않은 관계 1
+
+  ![alt tag](./img/pic_5_9.png)
+
+* 삭제되지 않은 관계 2
+
+  ![alt tag](./img/pic_5_10.png)
+
