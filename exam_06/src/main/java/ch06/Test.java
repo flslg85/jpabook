@@ -4,7 +4,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -20,6 +24,8 @@ public class Test {
         try {
             tx.begin(); //트랜잭션 시작
             save(em);  //비즈니스 로직
+            jpqlTest(em);
+            criteriaTest(em);
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {
@@ -30,6 +36,31 @@ public class Test {
         }
 
         emf.close(); //엔티티 매니저 팩토리 종료
+    }
+
+    private static void criteriaTest(EntityManager em) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Member> query = cb.createQuery(Member.class);
+
+        // 조회를 시작할 클래스
+        Root<Member> m = query.from(Member.class);
+
+        CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("name"), "발칙한것"));
+        List<Member> resultList = em.createQuery(cq).getResultList();
+
+        for (Member member : resultList) {
+            System.out.println("criteria member.name : " + member.getName());
+        }
+    }
+
+    private static void jpqlTest(EntityManager em) {
+        String jpql = "select m from Member as m where m.name = '발칙한것'";
+        List<Member> resultList = em.createQuery(jpql, Member.class)
+                .getResultList();
+
+        for (Member member : resultList) {
+            System.out.println("member.name : " + member.getName());
+        }
     }
 
     public static void save(EntityManager em) {
