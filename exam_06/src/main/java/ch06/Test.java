@@ -1,5 +1,7 @@
 package ch06;
 
+import com.mysema.query.jpa.impl.JPAQuery;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -26,6 +28,7 @@ public class Test {
             save(em);  //비즈니스 로직
             jpqlTest(em);
             criteriaTest(em);
+            queryDSL(em);
             tx.commit();//트랜잭션 커밋
 
         } catch (Exception e) {
@@ -50,6 +53,20 @@ public class Test {
 
         for (Member member : resultList) {
             System.out.println("criteria member.name : " + member.getName());
+        }
+    }
+
+    private static void queryDSL(EntityManager em) {
+        JPAQuery query = new JPAQuery(em);
+        QMember qMember = new QMember("m"); // 생성되는 JPQL 의 별칭이 m
+        List<Member> members = query
+                .from(qMember)
+                .where(qMember.name.eq("발칙한것"))
+                .orderBy(qMember.name.desc())
+                .list(qMember);
+
+        for (Member member : members) {
+            System.out.println("queryDSL member.name : " + member.getName());
         }
     }
 
