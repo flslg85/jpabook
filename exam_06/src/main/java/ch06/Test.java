@@ -82,20 +82,28 @@ public class Test {
 
     public static void save(EntityManager em) {
         Member member = createMember();
-        Delivery delivery = createDelivery();
-        Order order = createOrder(member, delivery);
-        Item item = createItem();
-        OrderItem orderItem = createOrderItem(order, item);
-        Category category = createCategory();
-        CategoryItem categoryItem = createCategoryItem(item, category);
 
-        em.persist(member);
-        em.persist(delivery);
-        em.persist(order);
+        Delivery delivery = createDelivery();
+
+        Order order = createOrder();
+        order.setMember(member);
+        order.setDelivery(delivery);
+
+        Item item = createItem();
+
+        OrderItem orderItem = createOrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrder(order);
+
+        Category category = createCategory();
+
+        CategoryItem categoryItem = createCategoryItem();
+        categoryItem.setItem(item);
+        categoryItem.setCategory(category);
+
         em.persist(item);
-        em.persist(orderItem);
         em.persist(category);
-        em.persist(categoryItem);
+        em.persist(member);
     }
 
     private static Delivery createDelivery() {
@@ -104,10 +112,8 @@ public class Test {
         return delivery;
     }
 
-    private static CategoryItem createCategoryItem(Item item, Category category) {
+    private static CategoryItem createCategoryItem() {
         CategoryItem categoryItem = new CategoryItem();
-        categoryItem.setCategory(category);
-        categoryItem.setItem(item);
         return categoryItem;
     }
 
@@ -125,17 +131,13 @@ public class Test {
         return item;
     }
 
-    private static OrderItem createOrderItem(Order order, Item item) {
+    private static OrderItem createOrderItem() {
         OrderItem orderItem = new OrderItem();
-        orderItem.setOrder(order);
-        orderItem.setItem(item);
         return orderItem;
     }
 
-    private static Order createOrder(Member member, Delivery delivery) {
+    private static Order createOrder() {
         Order order = new Order();
-        order.setMember(member);
-        order.setDelivery(delivery);
         order.setOrderDate(new Date(67678687));
         order.setStatus(OrderStatus.ORDER);
         return order;

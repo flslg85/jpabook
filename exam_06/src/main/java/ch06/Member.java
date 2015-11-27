@@ -18,9 +18,8 @@ public class Member {
     private String street;
     private String zipcode;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<Order>();
-
 
     /* method */
 

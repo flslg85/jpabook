@@ -1,5 +1,6 @@
 package ch06;
 
+import javax.naming.Reference;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,11 @@ public class Item {
     private int price;
     private int stockQuantity;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<CategoryItem> categoryItems = new ArrayList<CategoryItem>();
 
+    @OneToMany(mappedBy = "item")
+    private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
     public String getName() {
         return name;
@@ -44,5 +47,13 @@ public class Item {
 
     public void setStockQuantity(int stockQuantity) {
         this.stockQuantity = stockQuantity;
+    }
+
+    public List<CategoryItem> getCategoryItems() {
+        return categoryItems;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 }

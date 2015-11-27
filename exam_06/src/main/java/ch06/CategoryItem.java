@@ -12,11 +12,11 @@ public class CategoryItem {
     @Column(name = "CATEGORY_ITEM_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 
@@ -25,9 +25,11 @@ public class CategoryItem {
 
     public void setCategory(Category category) {
         this.category = category;
+        category.getCategoryItems().add(this);
     }
 
     public void setItem(Item item) {
         this.item = item;
+        item.getCategoryItems().add(this);
     }
 }

@@ -28,11 +28,11 @@ public class Order {
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DELIVERY_ID", nullable = false)
     private Delivery delivery;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)   // 영속성 전이 설정
     private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -44,16 +44,16 @@ public class Order {
     /* method */
 
     public void setMember(Member member) {
-        this.member = member;   // order -> member
-
-        if (!this.member.getOrders().contains(member)) {
-            this.member.getOrders().add(this);
-        }
+        this.member = member;
+        member.getOrders().add(this);
     }
 
-    public void addOrderItem(OrderItem orderItem) {
-        this.orderItems.add(orderItem); // order -> orderItem
-        orderItem.setOrder(this);   // orderItem -> order
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public Date getOrderDate() {
